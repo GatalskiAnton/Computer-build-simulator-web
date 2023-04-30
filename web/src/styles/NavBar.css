@@ -1,0 +1,17 @@
+.-bar{
+    background-color: #30322e;
+    color: white;
+}
+.-bar-link{
+    color: white;
+    margin-right: 10px;
+}
+.-bar-button{
+    --bs-btn-color: 0017E6;
+    color: white;
+    margin: 2px 5px;
+}
+.-bar-item--text{
+    color: white;
+    margin-right: 10px;
+}

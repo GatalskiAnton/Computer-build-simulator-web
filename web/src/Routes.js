@@ -1,9 +1,18 @@
 import Admin from "./pages/Admin";
-import {ADMIN_ROUTE, AUTH_ROUTE, BASKET_ROUTE, MAIN_ROUTE, PART_ROUTE} from "./utils/Consts";
+import {
+    ADMIN_ROUTE,
+    AUTH_ROUTE,
+    BASKET_ROUTE,
+    BUILD_ROUTE,
+    MAIN_ROUTE,
+    PART_ROUTE,
+    REGISTRATION_ROUTE
+} from "./utils/Consts";
 import Auth from "./pages/Auth";
 import Basket from "./pages/Basket";
 import MainPage from "./pages/MainPage";
 import PartPage from "./pages/PartPage";
+import BuildPage from "./pages/BuildPage";
 export const authRoutes = [
     {
         path: ADMIN_ROUTE,
@@ -26,5 +35,13 @@ export const publicRoutes = [
     {
         path: PART_ROUTE + '/:id',
         Component: PartPage
+    },
+    {
+        path: BUILD_ROUTE,
+        Component: BuildPage
+    },
+    {
+        path: REGISTRATION_ROUTE,
+        Component: Auth
     },
 ]

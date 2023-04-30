@@ -1,0 +1,18 @@
+.-auth-btn{
+    --bs-btn-color: 0017E6;
+    color: white;
+    margin: 10px 0;
+}
+.-auth-form{
+    display: flex;
+    flex-flow: column;
+}
+.-auth-form-control{
+    margin: 5px 0;
+}
+.-auth-row{
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+    margin: 5px 0;
+}
