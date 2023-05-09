@@ -3,7 +3,7 @@ import {Context} from "../index";
 import {Button, Container, Form, Nav, Navbar, NavItem} from "react-bootstrap";
 import {NavLink} from "react-router-dom";
 import "../styles/NavBar.css"
-import {ADMIN_ROUTE, AUTH_ROUTE, BUILD_ROUTE, MAIN_ROUTE} from "../utils/Consts";
+import {ADMIN_ROUTE, AUTH_ROUTE, BASKET_ROUTE, BUILD_ROUTE, MAIN_ROUTE} from "../utils/Consts";
 import {observer} from "mobx-react-lite";
 import {useHistory} from "react-router-dom";
 
@@ -28,6 +28,7 @@ const NavBar = observer( () =>{
 
                     <NavLink to={MAIN_ROUTE} className="-bar-link">Home</NavLink>
                     <NavLink to={BUILD_ROUTE} className="-bar-link">Build</NavLink>
+                    <NavLink to={BASKET_ROUTE} className="-bar-link">Basket</NavLink>
 
                     </Nav>
                     <Form className="d-flex">
