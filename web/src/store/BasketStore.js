@@ -5,13 +5,12 @@ export default class BasketStore {
         this._elements = []
         makeAutoObservable(this);
     }
-
-    addElement(element){
-        this._elements.push(element)
-    }
-
     setElements(elements) {
         this._elements = elements;
+    }
+
+    addToBasket(part){
+        this.elements.push(part)
     }
 
     get elements() {

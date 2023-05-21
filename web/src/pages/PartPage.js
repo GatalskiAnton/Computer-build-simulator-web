@@ -17,7 +17,13 @@ const PartPage = () => {
         {id: 5, title: "describe5", deskription: "dekription5"},
     ]
 
+
+
     const {basket} = useContext(Context)
+
+    const addToBasket = (addPart) => {
+        basket.addToBasket(addPart)
+    }
 
     return (
         <Container className="mt-3 d-flex flex-column justify-content-center">
@@ -31,7 +37,7 @@ const PartPage = () => {
                         style={{width: 300, height: 300, border: '3px solid lightgray'}}
                     >
                         <h2>{part.name}</h2>
-                        <Button onClick={() => basket.addElement(part)}>Add to basket</Button>
+                        <Button onClick={() => addToBasket(part)}>Add to basket</Button>
                     </Card>
                 </Col>
             </Row>

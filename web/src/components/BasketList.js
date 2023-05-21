@@ -1,8 +1,8 @@
 import React, {useContext} from 'react';
-import {observer} from "mobx-react-lite";
 import {Context} from "../index";
 import {Row} from "react-bootstrap";
 import PartItem from "./PartItem";
+import {observer} from "mobx-react-lite";
 
 const BasketList = observer(() => {
     const {basket} = useContext(Context)

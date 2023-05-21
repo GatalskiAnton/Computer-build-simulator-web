@@ -13,7 +13,7 @@ root.render(
       <Context.Provider value={{
           user: new UserStore(),
           part: new PartStore(),
-          basket: new BasketStore()
+          basket: new BasketStore(),
       }}>
           <App />
       </Context.Provider>

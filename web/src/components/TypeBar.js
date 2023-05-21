@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
-import {observer} from "mobx-react-lite";
 import {Context} from "../index";
 import {ListGroup} from "react-bootstrap";
+import {observer} from "mobx-react-lite";
 
 const TypeBar = observer(() => {
     const {part} = useContext(Context)

@@ -4,8 +4,8 @@ import {Button, Container, Form, Nav, Navbar, NavItem} from "react-bootstrap";
 import {NavLink} from "react-router-dom";
 import "../styles/NavBar.css"
 import {ADMIN_ROUTE, AUTH_ROUTE, BASKET_ROUTE, BUILD_ROUTE, MAIN_ROUTE} from "../utils/Consts";
-import {observer} from "mobx-react-lite";
 import {useHistory} from "react-router-dom";
+import {observer} from "mobx-react-lite";
 
 
 //Not working observer, NEED TO FIX
@@ -31,15 +31,7 @@ const NavBar = observer( () =>{
                     <NavLink to={BASKET_ROUTE} className="-bar-link">Basket</NavLink>
 
                     </Nav>
-                    <Form className="d-flex">
-                        <Form.Control
-                            type="search"
-                            placeholder="Search"
-                            className="me-2"
-                            aria-label="Search"
-                        />
-                        <Button className="-bar-button">Search</Button>
-                    </Form>
+                    
 
                     {user.isAuth ?
                         <Nav className="ml-auto">
