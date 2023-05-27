@@ -1,6 +1,7 @@
 import React, {useContext} from 'react';
 import {Button, Card, Col, Container, Image, Row} from "react-bootstrap";
 import {Context} from "../index";
+import {isDisabled} from "bootstrap/js/src/util";
 
 const PartPage = () => {
     const part = {
@@ -42,7 +43,7 @@ const PartPage = () => {
                 </Col>
             </Row>
             <Row className="d-flex flex-column" style={{marginTop: 20}}>
-                <h2>Characteristics</h2>
+                <h2>Characteristics</h2>s
                 {description.map((info, index) =>
                     <Row key={info.id} style={{background: index % 2 === 0 ? "lightgrey" : "transparent", padding: 10}}>
                         {info.title} : {info.deskription}

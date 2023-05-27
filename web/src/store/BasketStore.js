@@ -13,6 +13,10 @@ export default class BasketStore {
         this.elements.push(part)
     }
 
+    clearAllBasket(){
+        this.elements.splice(0, this.elements.length)
+    }
+
     get elements() {
         return this._elements;
     }
