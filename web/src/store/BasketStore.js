@@ -1,4 +1,5 @@
 import {makeAutoObservable} from 'mobx';
+import {prettyFormat} from "@testing-library/react";
 
 export default class BasketStore {
     constructor() {
@@ -15,6 +16,31 @@ export default class BasketStore {
 
     clearAllBasket(){
         this.elements.splice(0, this.elements.length)
+    }
+
+    hasInBasket(id){
+        for (let i = 0; i < this.elements.length; i++) {
+            if (id === this.elements[i].id){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    setInBasket = (part) =>{
+        if (part.inBasket === false){
+            part.inBasket = true
+        }else{
+            part.inBasket = false;
+        }
+    }
+
+    removeFromBasket(id){
+        for (let i = 0; i < this.elements.length; i++) {
+            if (id === this.elements[i].id){
+                this.elements.splice(i, 1)
+            }
+        }
     }
 
     get elements() {

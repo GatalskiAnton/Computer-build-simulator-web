@@ -2,12 +2,12 @@ import React, {useContext, useState} from 'react';
 import {Button, Form, Modal} from "react-bootstrap";
 import {Context} from "../index";
 
-const CreateType = ({show, onHide}) => {
+const DeleteType = ({show, onHide}) => {
     const [type, setType] = useState("");
     const {part} = useContext(Context)
 
-    const addNewType = (type) => {
-        part.addNewType(type)
+    const deleteType = (type) => {
+        part.deleteType(type)
     }
 
     const handleChange = (event) => {
@@ -15,7 +15,7 @@ const CreateType = ({show, onHide}) => {
     };
 
     const handleAddClick = () => {
-        addNewType(type);
+        deleteType(type);
         setType("");
         onHide();
     };
@@ -31,24 +31,24 @@ const CreateType = ({show, onHide}) => {
         >
             <Modal.Header closeButton>
                 <Modal.Title id="contained-modal-title-vcenter">
-                    Add new type
+                    Delete type
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <Form>
                     <Form.Control
-                        placeholder={"Enter new type"}
+                        placeholder={"Enter type for delete"}
                         value={type}
                         onChange={handleChange}
                     />
                 </Form>
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="outline-success" onClick={handleAddClick}>Add</Button>
+                <Button variant="outline-success" onClick={handleAddClick}>Delete</Button>
                 <Button variant="outline-danger" onClick={onHide}>Close</Button>
             </Modal.Footer>
         </Modal>
     );
 };
 
-export default CreateType;
+export default DeleteType;

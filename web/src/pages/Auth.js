@@ -12,6 +12,7 @@ const func = async () => {
                 Accept: "application/json",
                 "Content-Type": "application/json",
                 requestType: "componentRequest",
+                'Access-Control-Allow-Origin' : '*'
             },
             body: JSON.stringify({
                 "login": 'java1@mail.com',
@@ -23,7 +24,6 @@ const func = async () => {
             console.log(response.status);
             console.log(response);
             console.log(response.headers.get("errorType"))
-            return;
         }
         else {
             return response.text();
