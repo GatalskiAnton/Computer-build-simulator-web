@@ -1,42 +1,20 @@
-import React from 'react';
+import React, {useContext, useState} from 'react';
 import {Button, Card, Container, Form} from "react-bootstrap";
 import "../styles/Auth.css"
-import {NavLink, useLocation} from "react-router-dom";
-import {AUTH_ROUTE, REGISTRATION_ROUTE} from "../utils/Consts";
+import {NavLink, useHistory, useLocation} from "react-router-dom";
+import {AUTH_ROUTE, MAIN_ROUTE, REGISTRATION_ROUTE} from "../utils/Consts";
+import {set} from "mobx";
+import {observer} from "mobx-react-lite";
+import {Context} from "../index";
+const Auth = observer(() => {
 
-const func = async () => {
-    await fetch("http://localhost:9090/PCBuilder_war_exploded/component/getAll",
-        {
-            method: "POST",
-            headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json",
-                requestType: "componentRequest",
-                'Access-Control-Allow-Origin' : '*'
-            },
-            body: JSON.stringify({
-                "login": 'java1@mail.com',
-                "componentName": "GPU",
-                "componentId": 1,
-            })
-        }).then(response => {
-        if (!response.ok) {
-            console.log(response.status);
-            console.log(response);
-            console.log(response.headers.get("errorType"))
-        }
-        else {
-            return response.text();
-        }
-    }).then(json => console.log(json))
-        .catch(error => {
-            console.log(error);
-        }).finally();
-}
-
-const Auth = () => {
+    const {user} = useContext(Context)
     const location = useLocation()
+    const history = useHistory()
     const isLogin = location.pathname === AUTH_ROUTE
+
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
 
     console.log(location)
     return (
@@ -50,10 +28,15 @@ const Auth = () => {
                     <Form.Control
                         className="-auth-form-control"
                         placeholder="Enter your login"
+                        value={email}
+                        onChange={ e => setEmail(e.target.value)}
                     />
                     <Form.Control
                         className="-auth-form-control"
                         placeholder="Enter your password"
+                        value={password}
+                        onChange={ e => setPassword(e.target.value)}
+                        type="password"
                     />
                     <div className="-auth-row">
                         {isLogin ?
@@ -65,7 +48,9 @@ const Auth = () => {
                                 Have an account?<NavLink to={AUTH_ROUTE}>Enter</NavLink>
                             </div>
                         }
-                        <Button className="-auth-btn" onClick={() => func()}>
+                        <Button className="-auth-btn"
+
+                        >
                             {isLogin ? "Enter" : "Registration"}
                         </Button>
                     </div>
@@ -73,6 +58,6 @@ const Auth = () => {
             </Card>
         </Container>
     );
-};
+});
 
 export default Auth;

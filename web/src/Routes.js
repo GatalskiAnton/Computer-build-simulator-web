@@ -33,7 +33,7 @@ export const publicRoutes = [
         Component: MainPage
     },
     {
-        path: PART_ROUTE + '/:id',
+        path: PART_ROUTE + '/:type' +'/:id',
         Component: PartPage
     },
     {

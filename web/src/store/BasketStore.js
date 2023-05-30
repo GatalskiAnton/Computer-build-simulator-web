@@ -1,5 +1,4 @@
 import {makeAutoObservable} from 'mobx';
-import {prettyFormat} from "@testing-library/react";
 
 export default class BasketStore {
     constructor() {

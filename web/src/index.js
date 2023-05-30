@@ -7,6 +7,7 @@ import BasketStore from "./store/BasketStore";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
+
 export const Context = createContext(null)
 root.render(
   <React.StrictMode>
@@ -17,6 +18,5 @@ root.render(
       }}>
           <App />
       </Context.Provider>
-
   </React.StrictMode>
 );

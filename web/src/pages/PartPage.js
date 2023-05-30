@@ -11,7 +11,7 @@ const PartPage = () => {
         id: 1,
         name: "Test1",
         type: "SSD",
-        img: "https://content2.onliner.by/catalog/device/header/b026e6be1a5d8932abb359866cf820bb.jpeg",
+        img: "https://content2.onliner.by/catalog/device/header/c501e1922a63dec9d6871b2f300a1ed3.jpeg",
     }
     const description = [
         {id: 1, title: "describe1", deskription: "dekription1"},
