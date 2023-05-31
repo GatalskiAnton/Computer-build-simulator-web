@@ -1,13 +1,13 @@
-import React, {useContext} from 'react';
-import {Context} from "../index";
-import {ListGroup} from "react-bootstrap";
-import {observer} from "mobx-react-lite";
+import React, { useContext } from 'react';
+import { Context } from "../index";
+import { ListGroup } from "react-bootstrap";
+import { observer } from "mobx-react-lite";
 
 const TypeBar = observer(() => {
-    const {part} = useContext(Context)
+    const { part } = useContext(Context)
     return (
         <ListGroup
-            style={{cursor:"pointer"}}
+            style={{ cursor: "pointer" }}
         >
             {part.types.map(type =>
                 <ListGroup.Item

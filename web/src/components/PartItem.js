@@ -8,13 +8,14 @@ const PartItem = ({part}) => {
     console.log(history)
     return (
         <Col md={3} className="mt-4" onClick={() => history.push(PART_ROUTE + '/' + part.id)}>
+
             <Card style={{width: 150, cursor: "pointer"}} border={"light"}>
-                <Image width={150} height={150} src={part.img}/>
                 <div className="mt-2">
-                    <div className="text-black-50">{part.type}</div>
-                    <div>{part.name}</div>
+                    <div className="text-black-50">{part.name}</div>
+                    <div>{part.price}</div>
                 </div>
             </Card>
+
         </Col>
     );
 };
