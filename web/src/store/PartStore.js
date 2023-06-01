@@ -23,12 +23,16 @@ export default class PartStore {
             { id: 9, name: "SSD" },
         ]
         this._parts = []
-        this._selectedType = {}
+
         makeAutoObservable(this);
     }
 
     get types() {
         return this._types;
+    }
+
+    setParts(parts){
+        this._parts = parts
     }
 
     get selectedType() {
@@ -60,13 +64,5 @@ export default class PartStore {
 
     setSelectedType(type) {
         this._selectedType = type;
-    }
-
-    clearParts(){
-        this._parts = []
-    }
-
-    addPart(part){
-        this.parts.push(part)
     }
 }

@@ -1,49 +1,25 @@
 import {makeAutoObservable} from 'mobx';
-import {prettyFormat} from "@testing-library/react";
 
 export default class BasketStore {
     constructor() {
-        this._elements = []
+        this._partsInBasket = []
+        this._inBasketElements = []
         makeAutoObservable(this);
     }
-    setElements(elements) {
-        this._elements = elements;
+    setInBasketElements(elements){
+        this._inBasketElements = elements
     }
 
-    addToBasket(part){
-        this.elements.push(part)
+    setPartsInBasket(elements){
+        this._partsInBasket = elements
     }
 
-    clearAllBasket(){
-        this.elements.splice(0, this.elements.length)
+    get inBasketElements(){
+        return this._inBasketElements
     }
 
-    hasInBasket(id){
-        for (let i = 0; i < this.elements.length; i++) {
-            if (id === this.elements[i].id){
-                return true;
-            }
-        }
-        return false;
-    }
 
-    setInBasket = (part) =>{
-        if (part.inBasket === false){
-            part.inBasket = true
-        }else{
-            part.inBasket = false;
-        }
-    }
-
-    removeFromBasket(id){
-        for (let i = 0; i < this.elements.length; i++) {
-            if (id === this.elements[i].id){
-                this.elements.splice(i, 1)
-            }
-        }
-    }
-
-    get elements() {
-        return this._elements;
+    get partsInBasket() {
+        return this._partsInBasket;
     }
 }

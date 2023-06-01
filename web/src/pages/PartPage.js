@@ -1,64 +1,98 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Button, Card, Col, Container, Image, Row} from "react-bootstrap";
 import {Context} from "../index";
+import {useParams} from 'react-router-dom'
 import {isDisabled} from "bootstrap/js/src/util";
 
 const PartPage = () => {
-    const [isAddingToBasket, setIsAddingToBasket] = useState(false);
 
+    const [partInfo, setPartInfo] = useState({info : []})
 
-    const part = {
-        id: 1,
-        name: "Test1",
-        type: "SSD",
-        img: "https://content2.onliner.by/catalog/device/header/b026e6be1a5d8932abb359866cf820bb.jpeg",
-    }
-    const description = [
-        {id: 1, title: "describe1", deskription: "dekription1"},
-        {id: 2, title: "describe2", deskription: "dekription2"},
-        {id: 3, title: "describe3", deskription: "dekription3"},
-        {id: 4, title: "describe4", deskription: "dekription4"},
-        {id: 5, title: "describe5", deskription: "dekription5"},
-    ]
+    const {groupType, partId} = useParams()
 
     const {basket} = useContext(Context)
+    // console.log(`groupType = ${groupType} ; partID = ${partId}`)
 
-    const isInBasket = basket.hasInBasket(part.id)
+    useEffect(() => {
+        getComponent(groupType, partId)
+    }, [])
 
-    const addToBasket = (addPart) => {
-        setIsAddingToBasket(true)
-        basket.addToBasket(addPart)
+     const getComponent = async (partType, partID) => {
+        // console.log(`type = ${partType} && id = ${partID}`)
+        await fetch("http://localhost:9090/PCBuilder_war_exploded/component/getInfo", {
+            method: "POST",
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                "login": "guest",
+                "componentName": partType,
+                "id": partID,
+            })
+        }).then(response => {
+            if (!response.ok) {
+                console.log(response.status);
+                console.log(response);
+                console.log(response.headers.get("errorType"))
+                return;
+            }
+            else {
+                return response.json();
+            }
+        }).then(json => {
+            setPartInfo(json)
+        })
+            .catch(error => {
+                console.log(error);
+            }).finally();
     }
 
-    const removeFromBasket = (id) => {
-        setIsAddingToBasket(false)
-        basket.removeFromBasket(id)
+    const getInfo = () => {
+        var keys = Object.keys(partInfo)
+        var info = [];
+        for (let i = 0; i < keys.length; ++i) {
+            if (keys[i] === 'price'){
+                info.push(
+                    <Row key={i} style={{background: i % 2 === 0 ? "lightgrey" : "transparent", padding: 10}}>
+                        {keys[i]} | {partInfo[keys[i]]}$
+                    </Row>)
+            }
+            else{
+                info.push(
+                    <Row key={i} style={{background: i % 2 === 0 ? "lightgrey" : "transparent", padding: 10}}>
+                        {keys[i]} | {partInfo[keys[i]]}
+                    </Row>)
+            }
+        }
+        return info;
     }
 
     return (
         <Container className="mt-3 d-flex flex-column justify-content-center">
             <Row className="d-flex justify-content-center">
                 <Col md={4}>
-                    <Image width={300} height={300} src={part.img}/>
+                    <Image width={300} height={300} src={require("../images/GPU/GeForceGT1030.jpg")}/>
                 </Col>
                 <Col md={4}>
                     <Card
                         className="d-flex flex-column justify-content-around  align-items-center"
                         style={{width: 300, height: 300, border: '3px solid lightgray'}}
                     >
-                        <h2>{part.name}</h2>
-                        <Button id="addBtn" onClick={() => addToBasket(part)} disabled={isAddingToBasket}>Add to basket</Button>
-                        <Button onClick={() => removeFromBasket(part.id)} disabled={!isAddingToBasket}>Remove from basket</Button>
+                        <h2>{partInfo.name}</h2>
+                        <h2>{partInfo.price}$</h2>
+                        <Container className="d-flex flex-column align-content-around justify-content-center">
+                            <Button id="addBtn" onClick={() => alert("add")}>Add to basket</Button>
+                            <Button id="removeBtn" className="mt-2" onClick={() => alert("remove")}>Remove from basket</Button>
+                        </Container>
                     </Card>
                 </Col>
             </Row>
             <Row className="d-flex flex-column" style={{marginTop: 20}}>
                 <h2>Characteristics</h2>
-                {description.map((info, index) =>
-                    <Row key={info.id} style={{background: index % 2 === 0 ? "lightgrey" : "transparent", padding: 10}}>
-                        {info.title} : {info.deskription}
-                    </Row>
-                )}
+                {
+                    getInfo()
+                }
             </Row>
         </Container>
     );

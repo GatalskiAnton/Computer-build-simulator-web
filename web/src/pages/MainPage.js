@@ -1,16 +1,59 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { Col, Container, Row, Button } from "react-bootstrap";
-import TypeBar from "../components/TypeBar";
 import PartList from "../components/PartList";
 import { Context } from '..';
+import {setLastGroup} from "../global/GlobalVars";
 
 const MainPage = () => {
 
     const { part } = useContext(Context)
     const { user } = useContext(Context)
 
+    const getData = (json, name) =>{
+        switch (name){
+            case "CPU":
+                part.setParts(json.CPU)
+                setLastGroup(name)
+                break;
+            case "GPU":
+                part.setParts(json.GPU);
+                setLastGroup(name)
+                break;
+            case "Cooler":
+                part.setParts(json.Cooler);
+                setLastGroup(name)
+                break;
+            case "HDD":
+                part.setParts(json.HDD);
+                setLastGroup(name)
+                break;
+            case "Motherboard":
+                part.setParts(json.Motherboard);
+                setLastGroup(name)
+                break;
+            case "PCCase":
+                part.setParts(json.PCCase);
+                setLastGroup(name)
+                break;
+            case "PowerSupply":
+                part.setParts(json.PowerSupply);
+                setLastGroup(name)
+                break;
+            case "RAM":
+                part.setParts(json.RAM);
+                setLastGroup(name)
+                break;
+            case "SSD":
+                part.setParts(json.SSD);
+                setLastGroup(name)
+                break;
+            default:
+                part.setParts(null);
+                setLastGroup(name)
+                break;
+        }
+    }
 
-    const tempArray = []
 
     const getComponent = async (name) => {
         console.log(name)
@@ -19,6 +62,7 @@ const MainPage = () => {
             headers: {
                 Accept: "application/json",
                 "Content-Type": "application/json",
+                "Access-Control-Allow-Origin" : "*"
             },
             body: JSON.stringify({
                 "login": "guest",
@@ -35,10 +79,8 @@ const MainPage = () => {
                 return response.json();
             }
         }).then(json => {
-            console.log(json);
-            // getData(json);
-            part.clearParts()
-            part.pasts = json.name
+            // console.log(json);
+            getData(json, name);
         })
             .catch(error => {
                 console.log(error);
@@ -47,9 +89,8 @@ const MainPage = () => {
             }));
     }
 
-    const activeOnClick = (name) => { //PowerSupply
-        console.log(name)
-
+    const ActiveOnClick = (name) => { //PowerSupply
+        // console.log(name)
         getComponent(name)
     }
 
@@ -60,7 +101,7 @@ const MainPage = () => {
                     {part.types.map(type =>
                         <Button
                             key={type.id}
-                            onClick={e => activeOnClick(type.name)}
+                            onClick={e => ActiveOnClick(type.name)}
                             className="mt-1"
                         >{type.name}</Button>
                     )}

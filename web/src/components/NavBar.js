@@ -27,7 +27,6 @@ const NavBar = observer( () =>{
                     >
 
                     <NavLink to={MAIN_ROUTE} className="-bar-link">Home</NavLink>
-                    <NavLink to={BUILD_ROUTE} className="-bar-link">Build</NavLink>
                     <NavLink to={BASKET_ROUTE} className="-bar-link">Basket</NavLink>
 
                     </Nav>
