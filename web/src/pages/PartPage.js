@@ -3,6 +3,7 @@ import {Button, Card, Col, Container, Image, Row} from "react-bootstrap";
 import {Context} from "../index";
 import {useParams} from 'react-router-dom'
 import {isDisabled} from "bootstrap/js/src/util";
+import {getLastGroup} from "../global/GlobalVars";
 
 const PartPage = () => {
 
@@ -11,6 +12,7 @@ const PartPage = () => {
     const {groupType, partId} = useParams()
 
     const {basket} = useContext(Context)
+
     // console.log(`groupType = ${groupType} ; partID = ${partId}`)
 
     useEffect(() => {
@@ -68,6 +70,48 @@ const PartPage = () => {
         return info;
     }
 
+    const reactToAddBtn = () => {
+        if (!basket.typesInBasket.includes(groupType) || basket.partsInBasket.length === 0){
+            basket.typesInBasket.push(groupType)
+            basket.partsInBasket.push(partInfo)
+        }else{
+            if (basket.typesInBasket.includes(groupType)){
+                alert('Part of such type is already in basket')
+            }
+            else if(hasSuchElement(basket, partInfo.id, groupType)){
+                alert('This part is already in basket')
+            }
+        }
+    }
+
+    const hasSuchElement = (basket, id, type) => {
+        for (let i = 0; i < basket.typesInBasket.length; i++) {
+            if ( basket.partsInBasket[i].id === id && basket.typesInBasket[i] === type ){
+                return true;
+            }
+        }
+        return false
+    }
+
+    const reactToRemoveBtn = () =>{
+        if (basket.partsInBasket.length > 0){
+            if (!basket.typesInBasket.includes(groupType)){
+                alert('Nothing of such type in basket')
+            }
+            else if (!hasSuchElement(basket, partInfo.id, groupType)){
+                alert('No such part in basket')
+            }else {
+                for (let i = 0; i < basket.partsInBasket.length; i++) {
+                    if (basket.partsInBasket[i].id === partInfo.id && basket.typesInBasket[i] === groupType){
+                        basket.partsInBasket.splice(i, 1)
+                    }
+                }
+                basket.typesInBasket.filter(i => i !== groupType)
+            }
+        }else{alert('no elements in basket')}
+
+    }
+
     return (
         <Container className="mt-3 d-flex flex-column justify-content-center">
             <Row className="d-flex justify-content-center">
@@ -82,8 +126,8 @@ const PartPage = () => {
                         <h2>{partInfo.name}</h2>
                         <h2>{partInfo.price}$</h2>
                         <Container className="d-flex flex-column align-content-around justify-content-center">
-                            <Button id="addBtn" onClick={() => alert("add")}>Add to basket</Button>
-                            <Button id="removeBtn" className="mt-2" onClick={() => alert("remove")}>Remove from basket</Button>
+                            <Button id="addBtn" onClick={() => reactToAddBtn()}>Add to basket</Button>
+                            <Button id="removeBtn" className="mt-2" onClick={() => reactToRemoveBtn()}>Remove from basket</Button>
                         </Container>
                     </Card>
                 </Col>

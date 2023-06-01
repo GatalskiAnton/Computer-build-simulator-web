@@ -4,7 +4,7 @@ import {useHistory} from "react-router-dom";
 import {PART_ROUTE} from "../utils/Consts";
 import {getLastGroup} from "../global/GlobalVars";
 
-const PartItem = ({part}) => {
+const PartItem = ({part, partType}) => {
     const history = useHistory();
     console.log(history)
     return (
@@ -16,6 +16,7 @@ const PartItem = ({part}) => {
                         src={require("../images/GPU/GeForceGT1030.jpg")}
                     />
                     <div className="text-black-50">{part.name}</div>
+                    <div className="text-black-50">{partType}</div>
                     <div>{part.price}$</div>
                 </div>
             </Card>

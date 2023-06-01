@@ -10,12 +10,6 @@ export default class BasketStore {
     setTypesInBasket(types){
         this._typesInBasket = types
     }
-
-
-    addTypeToBasket(type){
-        this.typesInBasket.push(type)
-    }
-
     get typesInBasket() {
         return this._typesInBasket;
     }

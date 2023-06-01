@@ -9,7 +9,7 @@ const BasketList = observer(() => {
     return (
         <Row className="d-flex">
             {basket.partsInBasket.map(part =>
-                <PartItem key={part.id} part={part}/>
+                <PartItem key={part.id} part={part} />
             )}
         </Row>
     );
