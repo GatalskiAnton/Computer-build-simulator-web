@@ -61,14 +61,12 @@ const Auth = () => {
             return
         }
 
-        isLogin ? await loginToSystem(false) : await registerToSystem(false)
+        isLogin ?  await loginToSystem(false) :  await registerToSystem(false)
     }
 
     const registerToSystem = async (googleAcc) => {
         await fetch("http://localhost:9090/PCBuilder_war_exploded/user/register",
-
             console.log(70),
-
             {
                 method: "POST",
                 headers: {
@@ -127,10 +125,10 @@ const Auth = () => {
                     "password": passwordText,
                     "googleAccount": googleAcc
                 })
-            }).then(async response => {
+            }).then(response => {
             if (!response.ok) {
-                console.log(135)
-
+                console.log("Auth --- 132str")
+                action()
                 if (response.status !== 999) {
                     console.log("some error");
                 }
@@ -151,14 +149,10 @@ const Auth = () => {
                 user.setIsAuth(true)
                 alert(`Welcome back ${emailText}`)
                 history.push(MAIN_ROUTE)
-
             }
         }).catch(error => console.log(error))
     }
 
-    const getElementsForBasket = () => {
-
-    }
 
     const validateEmail = () => {
         let reg = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$";
@@ -176,7 +170,7 @@ const Auth = () => {
                 <h2 className="m-auto">{isLogin ? "Authorization" : "Registration"}</h2>
                 <Form className="-auth-form">
                     {isLogin ?
-                        <Container>
+                        <Form.Group>
                             <Form.Control
                                 className="-auth-form-control"
                                 placeholder="Enter your email"
@@ -210,9 +204,9 @@ const Auth = () => {
                                     setpasswordText(text.target.value);
                                 }}
                             />
-                        </Container>
+                        </Form.Group>
                         :
-                        <Container>
+                        <Form.Group>
                             <Form.Control
                                 className="-auth-form-control"
                                 placeholder="Enter your email"
@@ -263,7 +257,7 @@ const Auth = () => {
                                     setconfirmPasswordText(text.target.value);
                                 }}
                             />
-                        </Container>
+                        </Form.Group>
                     }
 
                     <div className="-auth-row">
@@ -286,6 +280,14 @@ const Auth = () => {
             </Card>
         </Container>
     );
+
+    const action = () => {
+        user.setlogin(emailText)
+        user.setIsAuth(true)
+        alert(`Welcome back ${emailText}`)
+        history.push(MAIN_ROUTE)
+    }
 };
+
 
 export default Auth;

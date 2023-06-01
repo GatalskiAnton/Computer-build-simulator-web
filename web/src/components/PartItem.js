@@ -13,7 +13,7 @@ const PartItem = ({part, partType}) => {
             <Card style={{width: 150, cursor: "pointer"}} border={"light"}>
                 <div className="mt-2">
                     <Image
-                        src={require("../images/GPU/GeForceGT1030.jpg")}
+                        src={require("../images/GPU/1.jpg")}
                     />
                     <div className="text-black-50">{part.name}</div>
                     <div className="text-black-50">{partType}</div>

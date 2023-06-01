@@ -78,7 +78,7 @@ const PartPage = () => {
             if (basket.typesInBasket.includes(groupType)){
                 alert('Part of such type is already in basket')
             }
-            else if(hasSuchElement(basket, partInfo.id, groupType)){
+            else if(hasSuchElement(basket, partId, groupType)){
                 alert('This part is already in basket')
             }
         }
@@ -98,11 +98,11 @@ const PartPage = () => {
             if (!basket.typesInBasket.includes(groupType)){
                 alert('Nothing of such type in basket')
             }
-            else if (!hasSuchElement(basket, partInfo.id, groupType)){
+            else if (!hasSuchElement(basket, partId, groupType)){
                 alert('No such part in basket')
             }else {
                 for (let i = 0; i < basket.partsInBasket.length; i++) {
-                    if (basket.partsInBasket[i].id === partInfo.id && basket.typesInBasket[i] === groupType){
+                    if (basket.partsInBasket[i].id === partId && basket.typesInBasket[i] === groupType){
                         basket.partsInBasket.splice(i, 1)
                     }
                 }
@@ -116,7 +116,7 @@ const PartPage = () => {
         <Container className="mt-3 d-flex flex-column justify-content-center">
             <Row className="d-flex justify-content-center">
                 <Col md={4}>
-                    <Image width={300} height={300} src={require("../images/GPU/GeForceGT1030.jpg")}/>
+                    <Image width={300} height={300} src={require(`../images/${groupType}/${partId}.jpg`)}/>
                 </Col>
                 <Col md={4}>
                     <Card
@@ -124,6 +124,7 @@ const PartPage = () => {
                         style={{width: 300, height: 300, border: '3px solid lightgray'}}
                     >
                         <h2>{partInfo.name}</h2>
+                        <h2>{groupType}</h2>
                         <h2>{partInfo.price}$</h2>
                         <Container className="d-flex flex-column align-content-around justify-content-center">
                             <Button id="addBtn" onClick={() => reactToAddBtn()}>Add to basket</Button>
