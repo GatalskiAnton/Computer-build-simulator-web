@@ -9,7 +9,7 @@ import {observer} from "mobx-react-lite";
 
 
 //Not working observer, NEED TO FIX
-const NavBar = observer( () =>{
+const NavBar = observer(() => {
     const {user} = useContext(Context)
     const history = useHistory()
     return (
@@ -26,11 +26,11 @@ const NavBar = observer( () =>{
                         navbarScroll
                     >
 
-                    <NavLink to={MAIN_ROUTE} className="-bar-link">Home</NavLink>
-                    <NavLink to={BASKET_ROUTE} className="-bar-link">Basket</NavLink>
+                        <NavLink to={MAIN_ROUTE} className="-bar-link">Home</NavLink>
+                        <NavLink to={BASKET_ROUTE} className="-bar-link">Basket</NavLink>
 
                     </Nav>
-                    
+
 
                     {user.isAuth ?
                         <Nav className="ml-auto">
@@ -42,7 +42,12 @@ const NavBar = observer( () =>{
                             </Button>
                             <Button
                                 className="-bar-button"
-                                onClick={() => {history.push(AUTH_ROUTE); user.setIsAuth(false)}}
+                                onClick={() => {
+                                    history.push(AUTH_ROUTE);
+                                    user.setIsAuth(false);
+                                    alert(`Goodbye ${user.login}`)
+                                }
+                                }
                             >
                                 Exit
                             </Button>
@@ -52,7 +57,7 @@ const NavBar = observer( () =>{
                             <Button
                                 className="-bar-button"
                                 onClick={() => history.push(AUTH_ROUTE)
-                            }
+                                }
                             >
                                 Authorization
                             </Button>

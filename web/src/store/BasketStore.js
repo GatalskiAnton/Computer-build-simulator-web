@@ -3,19 +3,25 @@ import {makeAutoObservable} from 'mobx';
 export default class BasketStore {
     constructor() {
         this._partsInBasket = []
-        this._inBasketElements = []
+        this._typesInBasket = []
         makeAutoObservable(this);
     }
-    setInBasketElements(elements){
-        this._inBasketElements = elements
+
+    setTypesInBasket(types){
+        this._typesInBasket = types
+    }
+
+
+    addTypeToBasket(type){
+        this.typesInBasket.push(type)
+    }
+
+    get typesInBasket() {
+        return this._typesInBasket;
     }
 
     setPartsInBasket(elements){
         this._partsInBasket = elements
-    }
-
-    get inBasketElements(){
-        return this._inBasketElements
     }
 
 
