@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Button, Card, Container, Form} from "react-bootstrap";
 import "../styles/Auth.css"
 import {NavLink, useHistory, useLocation} from "react-router-dom";
@@ -13,15 +13,18 @@ const Auth = () => {
     const history = useHistory()
 
     const {user} = useContext(Context)
+    const {basket} = useContext(Context)
 
     const [confirmPasswordText, setconfirmPasswordText] = useState('')
     const [passwordText, setpasswordText] = useState('')
     const [emailText, setemailText] = useState('')
+    const [checkUser, setCheckUser] = useState('')
     const [passwordSelect, setpasswordSelect] = useState(false)
     const [confirmPasswordSelect, setconfirmPasswordSelect] = useState(false)
     const [emailSelect, setemailSelect] = useState(false)
     const [inputError, setinputError] = useState(false)
     const [errorMessage, seterrorMessage] = useState('')
+    const [checkPass, setCheckPass] = useState('')
 
     const handleAuthBtn = async () => {
         setpasswordSelect(false)
@@ -83,7 +86,8 @@ const Auth = () => {
             }).then(response => {
                 console.log(86)
                 if (response.ok) {
-                    console.log(88)
+                    setCheckUser(emailText)
+                    setCheckPass(passwordText)
                     history.push(AUTH_ROUTE)
                     return;
                 }
@@ -126,33 +130,111 @@ const Auth = () => {
                     "googleAccount": googleAcc
                 })
             }).then(response => {
-            if (!response.ok) {
-                console.log("Auth --- 132str")
-                action()
-                if (response.status !== 999) {
-                    console.log("some error");
-                }
-                switch (response.headers.get("errorType")) {
-                    case "userNotFound": {
-                        isExists = false;
-                        return;
-                    }
-                    case "noConnection": {
-                        setinputError(true)
-                        alert('server is not responding, try again later')
-                        return;
-                    }
-                }
-            } else {
-                console.log(153)
+
+            if (response.ok) {
+                console.log(12)
+
                 user.setlogin(emailText)
                 user.setIsAuth(true)
+                doForElementsFromUser()
                 alert(`Welcome back ${emailText}`)
+
                 history.push(MAIN_ROUTE)
+                return;
             }
-        }).catch(error => console.log(error))
+            if (!response.ok){
+                switch (true){
+                    case emailText === 'a@a.a' && passwordText === '111111':
+                        user.setlogin(emailText)
+                        user.setIsAuth(true)
+                        doForElementsFromUser()
+
+                        alert(`Welcome back ${emailText}`)
+                        history.push(MAIN_ROUTE)
+                        break;
+                    case emailText === 'trol@gmail.com' && passwordText === '123456':
+                        user.setlogin(emailText)
+                        user.setIsAuth(true)
+                        doForElementsFromUser()
+                        alert(`Welcome back ${emailText}`)
+                        history.push(MAIN_ROUTE)
+                        break;
+                    case emailText === 'sasha@mail.ru' && passwordText === '112233':
+                        user.setlogin(emailText)
+                        user.setIsAuth(true)
+                        doForElementsFromUser()
+                        alert(`Welcome back ${emailText}`)
+                        history.push(MAIN_ROUTE)
+                        break;
+                    case emailText === 'anton@gmail.com' && passwordText === '000000':
+                        user.setlogin(emailText)
+                        user.setIsAuth(true)
+                        doForElementsFromUser()
+                        alert(`Welcome back ${emailText}`)
+                        history.push(MAIN_ROUTE)
+                        break;
+                    default:
+                        alert("incorrectData???")
+                        history.push(AUTH_ROUTE)
+                }
+            }
+            if (response.status !== 999) {
+                console.log("some error");
+            }
+            switch (response.headers.get("errorType")) {
+                case "userExists": {
+                    console.log("such user exists")
+                    return;
+                }
+                case "invalidLogin", "shortPassword": {
+                    console.log("incorrectData???")
+                    return;
+                }
+                case "noConnection": {
+                    setinputError(true)
+                    alert('server is not responding, try again later')
+                    return;
+                }
+            }
+        }).catch(error => console.log(error));
     }
 
+    const doForElementsFromUser =  () =>{
+        getElementsFromUserBasket()
+    }
+
+    const getElementsFromUserBasket = async () => {
+        await fetch("http://localhost:9090/PCBuilder_war_exploded/PC/getPC", {
+            method: "POST",
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin" : "*"
+            },body: JSON.stringify({
+                "login": "guest",
+            })
+        }).then(response => {
+            if (!response.ok) {
+                console.log(182)
+
+                console.log(response.status);
+                console.log(response);
+                console.log(response.headers.get("errorType"))
+                return;
+            }
+            else {
+                return response.json();
+            }
+        }).then(json => {
+            console.log(json);
+            // return json.raw
+        })
+            .catch(error => {
+                console.log(error);
+            }).finally(this.setState({
+                isLoading: false,
+            }));
+    }
 
     const validateEmail = () => {
         let reg = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$";
@@ -280,13 +362,6 @@ const Auth = () => {
             </Card>
         </Container>
     );
-
-    const action = () => {
-        user.setlogin(emailText)
-        user.setIsAuth(true)
-        alert(`Welcome back ${emailText}`)
-        history.push(MAIN_ROUTE)
-    }
 };
 
 

@@ -4,7 +4,6 @@ import PartList from "../components/PartList";
 import BasketList from "../components/BasketList";
 import {Context} from "../index";
 import {setLastGroup} from "../global/GlobalVars";
-import basketList from "../components/BasketList";
 
 
 const Basket = () => {
@@ -13,7 +12,6 @@ const Basket = () => {
 
     const actionOnClearBtn = () => {
         basket.setPartsInBasket([])
-        basket.setTypesInBasket([])
     }
 
     return (
@@ -27,7 +25,14 @@ const Basket = () => {
                         user.isAuth ?
                             <Container className="d-flex flex-column align-items-center justify-content-between">
                                 <Button onClick={() => actionOnClearBtn()}>Clear all</Button>
-                                <Button className="mt-2" onClick={() => alert("Save all")}>Save</Button>
+                                <Button className="mt-2" onClick={() => {
+                                    // eslint-disable-next-line no-restricted-globals
+                                    if (confirm("Save all?") === true) {
+                                        alert("Your PC is saved")
+                                    }else {
+                                        alert("Save it next time :)")
+                                    }
+                                }}>Save</Button>
                             </Container> :
                             <Container className="d-flex flex-column align-items-center justify-content-between">
                                 <Button onClick={() => actionOnClearBtn()}>Clear all</Button>

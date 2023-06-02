@@ -2,9 +2,8 @@ import React from 'react';
 import {Card, Col, Image} from "react-bootstrap";
 import {useHistory} from "react-router-dom";
 import {PART_ROUTE} from "../utils/Consts";
-import {getLastGroup} from "../global/GlobalVars";
 
-const PartItem = ({part, partType}) => {
+const BasketItem = ({part, partType}) => {
     const history = useHistory();
     console.log(history)
     return (
@@ -25,4 +24,4 @@ const PartItem = ({part, partType}) => {
     );
 };
 
-export default PartItem;
+export default BasketItem

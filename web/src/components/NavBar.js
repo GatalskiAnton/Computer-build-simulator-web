@@ -36,7 +36,10 @@ const NavBar = observer(() => {
                         <Nav className="ml-auto">
                             <Button
                                 className="-bar-button"
-                                onClick={() => history.push(ADMIN_ROUTE)}
+                                onClick={() => {
+                                    history.push(ADMIN_ROUTE);
+                                }
+                            }
                             >
                                 Admin
                             </Button>
@@ -45,7 +48,7 @@ const NavBar = observer(() => {
                                 onClick={() => {
                                     history.push(AUTH_ROUTE);
                                     user.setIsAuth(false);
-                                    alert(`Goodbye ${user.login}`)
+                                    alert(`Goodbye ${user.login}. See you next time :)`)
                                 }
                                 }
                             >

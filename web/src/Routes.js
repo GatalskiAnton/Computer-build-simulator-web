@@ -21,6 +21,10 @@ export const authRoutes = [
 ]
 export const publicRoutes = [
     {
+        path: ADMIN_ROUTE,
+        Component: Admin
+    },
+    {
         path: AUTH_ROUTE,
         Component: Auth
     },

@@ -16,8 +16,8 @@ const PartPage = () => {
     // console.log(`groupType = ${groupType} ; partID = ${partId}`)
 
     useEffect(() => {
-        getComponent(groupType, partId)
-    }, [])
+        getComponent(groupType, partId);
+    },[])
 
      const getComponent = async (partType, partID) => {
         // console.log(`type = ${partType} && id = ${partID}`)
@@ -70,46 +70,74 @@ const PartPage = () => {
         return info;
     }
 
+    const [canAdd, setCanAdd] = useState(true)
+    const [canRemove, setCanRemove] = useState(false)
+
     const reactToAddBtn = () => {
-        if (!basket.typesInBasket.includes(groupType) || basket.partsInBasket.length === 0){
-            basket.typesInBasket.push(groupType)
-            basket.partsInBasket.push(partInfo)
-        }else{
-            if (basket.typesInBasket.includes(groupType)){
-                alert('Part of such type is already in basket')
-            }
-            else if(hasSuchElement(basket, partId, groupType)){
-                alert('This part is already in basket')
-            }
-        }
-    }
-
-    const hasSuchElement = (basket, id, type) => {
-        for (let i = 0; i < basket.typesInBasket.length; i++) {
-            if ( basket.partsInBasket[i].id === id && basket.typesInBasket[i] === type ){
-                return true;
+        // if (hasSuchType(basket, groupType) !== -1){
+        //     alert('Part of such type is already in basket')
+        //     setCanAdd(false)
+        // }
+        // else{
+        //     if (hasSuchElement(basket, partId, groupType) !== -1){
+        //         alert('Has such part')
+        //         setCanAdd(false)
+            // }else{
+        for (let i = 0; i < basket.partsInBasket.length; i++) {
+            if (basket.partsInBasket[i].partInfo.id === partId && basket.partsInBasket[i].groupType === groupType){
+                setCanAdd(false)
+                setCanRemove(true)
             }
         }
-        return false
+
+
+                if (canAdd){
+                    basket.partsInBasket.push({partInfo, groupType})
+                    setCanAdd(false)
+                }
     }
 
+    const hasSuchElement = (basket, id ,type) => {
+        return basket.partsInBasket.findIndex(el => el.groupType === type && el.partInfo.id === id) === -1
+    }
+
+    const hasSuchType = (basket, type) => {
+        return basket.partsInBasket.findIndex(el => el.groupType === type) === -1
+    }
     const reactToRemoveBtn = () =>{
         if (basket.partsInBasket.length > 0){
-            if (!basket.typesInBasket.includes(groupType)){
-                alert('Nothing of such type in basket')
-            }
-            else if (!hasSuchElement(basket, partId, groupType)){
-                alert('No such part in basket')
-            }else {
+            try{
+                // if (!hasSuchElement(basket, partId, groupType)){
+                //     alert("no such element")
+                //     return
+                // }
+                // for (let i = 0; i < basket.partsInBasket.length; i++) {
+                //     if (basket.partsInBasket[i].partInfo.id === partId && basket.partsInBasket[i].groupType === groupType){
+                //         basket.partsInBasket.splice(i, 1)
+                //     }
+                // }
+
+
                 for (let i = 0; i < basket.partsInBasket.length; i++) {
-                    if (basket.partsInBasket[i].id === partId && basket.typesInBasket[i] === groupType){
-                        basket.partsInBasket.splice(i, 1)
+                    if (basket.partsInBasket[i].partInfo.id === partId && basket.partsInBasket[i].groupType === groupType){
+                        setCanAdd(false)
+                        setCanRemove(true)
                     }
                 }
-                basket.typesInBasket.filter(i => i !== groupType)
+
+                if (canRemove){
+                    for (let i = 0; i < basket.partsInBasket.length; i++) {
+                        if (basket.partsInBasket[i].partInfo.id === partId && basket.partsInBasket[i].groupType === groupType) {
+                            basket.removeElementIndex(i)
+                        }
+                    }
+                    setCanRemove(false)
+                }
+            }
+            catch (e){
+                alert('check what you delete')
             }
         }else{alert('no elements in basket')}
-
     }
 
     return (
@@ -127,8 +155,9 @@ const PartPage = () => {
                         <h2>{groupType}</h2>
                         <h2>{partInfo.price}$</h2>
                         <Container className="d-flex flex-column align-content-around justify-content-center">
-                            <Button id="addBtn" onClick={() => reactToAddBtn()}>Add to basket</Button>
-                            <Button id="removeBtn" className="mt-2" onClick={() => reactToRemoveBtn()}>Remove from basket</Button>
+                            <Button id="addBtn" onClick={() => {
+                                reactToAddBtn();
+                            }}>Add to basket</Button>
                         </Container>
                     </Card>
                 </Col>
